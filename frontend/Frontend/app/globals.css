@@ -1,0 +1,224 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #0B1220;
+  --foreground: #E5E7EB;
+  --card: #111827;
+  --card-foreground: #E5E7EB;
+  --popover: #111827;
+  --popover-foreground: #E5E7EB;
+  --primary: #3B82F6;
+  --primary-foreground: #ffffff;
+  --secondary: #1F2937;
+  --secondary-foreground: #E5E7EB;
+  --muted: #374151;
+  --muted-foreground: #9CA3AF;
+  --accent: #3B82F6;
+  --accent-foreground: #ffffff;
+  --destructive: #EF4444;
+  --destructive-foreground: #ffffff;
+  --border: #1F2937;
+  --input: #1F2937;
+  --ring: rgba(59, 130, 246, 0.5);
+  --radius: 0.5rem;
+
+  /* Brand colors */
+  --color-alert: #EF4444;
+  --color-warning: #F59E0B;
+  --color-safe: #22C55E;
+  --color-navy: #0B1220;
+  --color-glass: #111827;
+  --color-glass-border: #1F2937;
+
+  /* Glows - subtle or none */
+  --glow-alert: 0 0 10px rgba(239, 68, 68, 0.2);
+  --glow-warning: none;
+  --glow-safe: none;
+}
+
+@theme inline {
+  --font-sans: 'Inter', 'Inter Fallback';
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-color: #0B1220;
+    color: #E5E7EB;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+  html {
+    background-color: #0B1220;
+  }
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.02);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.12);
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.2);
+  }
+}
+
+/* Clean SaaS cards */
+.glass-card {
+  background: #111827;
+  border: 1px solid #1F2937;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  transform: translateZ(0);
+  will-change: transform;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-1px) translateZ(0);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.glass-card-safe {
+  background: #111827;
+  border: 1px solid #1F2937;
+  border-left: 3px solid #22C55E;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.glass-card-warning {
+  background: #111827;
+  border: 1px solid #1F2937;
+  border-left: 3px solid #F59E0B;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.glass-card-critical {
+  background: rgba(239, 68, 68, 0.04);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-left: 4px solid #EF4444;
+  /* subtle glow for critical only */
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.15);
+}
+
+@keyframes pill-glow {
+  0%, 100% { box-shadow: 0 0 8px currentColor; opacity: 0.9; }
+  50% { box-shadow: 0 0 16px currentColor, 0 0 30px currentColor; opacity: 1; }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes live-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.live-dot {
+  animation: live-blink 1.5s ease-in-out infinite;
+}
+
+@keyframes scan-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+.scan-line {
+  display: none;
+}
+
+@keyframes bar-fill {
+  from { width: 0; }
+  to { width: var(--target-width); }
+}
+
+.progress-bar {
+  animation: bar-fill 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.tab-active-glow {
+  box-shadow: 0 0 12px rgba(255, 59, 59, 0.5), 0 0 24px rgba(255, 59, 59, 0.2);
+}
+
+.replay-glow {
+  box-shadow: 0 0 10px rgba(255, 149, 0, 0.4);
+  animation: pill-glow 2s ease-in-out infinite;
+  color: #FF9500;
+}
+
+@keyframes sentiment-pulse {
+  0%, 100% { 
+    r: 130;
+    opacity: 0.3;
+  }
+  50% { 
+    r: 145;
+    opacity: 0.1;
+  }
+}
+
+@keyframes sentiment-pulse-fast {
+  0%, 100% { 
+    r: 130;
+    opacity: 0.5;
+  }
+  50% { 
+    r: 150;
+    opacity: 0.15;
+  }
+}
+
+.sentiment-pulse-normal {
+  animation: sentiment-pulse 2.5s ease-in-out infinite;
+}
+
+.sentiment-pulse-distressed {
+  animation: sentiment-pulse-fast 1.2s ease-in-out infinite;
+}
+
+/* Optimized marquee animation using CSS transform */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+  will-change: transform;
+}
